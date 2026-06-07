@@ -5,49 +5,49 @@ import AnimeCard from "../components/AnimeCard";
 import { getTrending, getSeasonal } from "../api/anilist";
 import { getLists } from "../api/backend";
 
-const frierenBanner      = "https://s4.anilist.co/file/anilistcdn/media/anime/banner/154587-RIHCMnBAQzXv.jpg";
-const soloLevelingBanner = "https://s4.anilist.co/file/anilistcdn/media/anime/banner/166531-ooZMBnFUcJhO.jpg";
-const demonSlayerBanner  = "https://s4.anilist.co/file/anilistcdn/media/anime/banner/101922-YetISdb9bZBl.jpg";
+import frierenBanner from "./banners/frieren.png";
+import soloLevelingBanner from "./banners/SoloLeveling.png";
+import demonSlayerBanner from "./banners/DemonSlayer.png";
 
 // ── SVG Icons ────────────────────────────────────────────────────────────────
 const IconSearch = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
   </svg>
 );
 const IconSparkle = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
+    <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" />
   </svg>
 );
 const IconPlus = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-    <path d="M12 5v14M5 12h14"/>
+    <path d="M12 5v14M5 12h14" />
   </svg>
 );
 const IconPlay = () => (
   <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M8 5v14l11-7z"/>
+    <path d="M8 5v14l11-7z" />
   </svg>
 );
 const IconChevronLeft = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M15 18l-6-6 6-6"/>
+    <path d="M15 18l-6-6 6-6" />
   </svg>
 );
 const IconChevronRight = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M9 18l6-6-6-6"/>
+    <path d="M9 18l6-6-6-6" />
   </svg>
 );
 const IconStar = () => (
   <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" stroke="none">
-    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
   </svg>
 );
 const IconFire = () => (
   <svg width="13" height="13" viewBox="0 0 24 24" fill="#a855f7" stroke="none">
-    <path d="M12 2c0 0-5 5-5 10a5 5 0 0 0 10 0c0-2-1-4-2-5 0 3-2 4-3 4s-2-2-2-4c1 0 2-5 2-5z"/>
+    <path d="M12 2c0 0-5 5-5 10a5 5 0 0 0 10 0c0-2-1-4-2-5 0 3-2 4-3 4s-2-2-2-4c1 0 2-5 2-5z" />
   </svg>
 );
 
@@ -55,41 +55,41 @@ const IconFire = () => (
 // objectPosition controls which part of the image shows (e.g. "center top" keeps top)
 const SLIDES = [
   {
-    img:         frierenBanner,
+    img: frierenBanner,
     objectPosition: "center 35%",
-    title:       "Frieren: Beyond Journey's End",
+    title: "Frieren: Beyond Journey's End",
     description: "A journey that offers the precious gift of understanding what it truly means to live.",
-    genres:      ["Adventure", "Drama", "Fantasy"],
-    score:       9.3,
+    genres: ["Adventure", "Drama", "Fantasy"],
+    score: 9.3,
     // The frieren image is already wide & light on the left — use a lighter overlay
     // overlayStyle: "linear-gradient(to right, rgba(245,243,255,0.96) 0%, rgba(245,243,255,0.82) 32%, rgba(245,243,255,0.25) 55%, rgba(245,243,255,0.0) 72%)",
     // textColor:   "#1e1b4b",
     // subColor:    "#6b7280",
   },
   {
-    img:         soloLevelingBanner,
+    img: soloLevelingBanner,
     objectPosition: "center 20%",   // show upper part (character + sky portal)
-    title:       "Solo Leveling",
+    title: "Solo Leveling",
     description: "The weakest hunter in the world awakens a power that will shake the very foundations of reality.",
-    genres:      ["Action", "Fantasy", "Adventure"],
-    score:       8.7,
+    genres: ["Action", "Fantasy", "Adventure"],
+    score: 8.7,
     // Dark image — white text works, but still need left fade so text is readable
     overlayStyle: "linear-gradient(to right, rgba(10,8,25,0.90) 0%, rgba(10,8,25,0.70) 32%, rgba(10,8,25,0.25) 58%, rgba(10,8,25,0.0) 75%)",
-    textColor:   "#ffffff",
-    subColor:    "rgba(255,255,255,0.75)",
+    textColor: "#ffffff",
+    subColor: "rgba(255,255,255,0.75)",
     accentColor: "rgba(255,255,255,0.9)",
-   
+
   },
   {
-    img:         demonSlayerBanner,
+    img: demonSlayerBanner,
     objectPosition: "center 36%",   // show upper part (sky + characters)
-    title:       "Demon Slayer: Kimetsu no Yaiba",
+    title: "Demon Slayer: Kimetsu no Yaiba",
     description: "A boy joins an ancient order of swordsmen to hunt down the demon that slaughtered his family.",
-    genres:      ["Action", "Historical", "Supernatural"],
-    score:       8.9,
+    genres: ["Action", "Historical", "Supernatural"],
+    score: 8.9,
     overlayStyle: "linear-gradient(to right, rgba(15,8,30,0.92) 0%, rgba(15,8,30,0.72) 32%, rgba(15,8,30,0.22) 58%, rgba(15,8,30,0.0) 75%)",
-    textColor:   "#ffffff",
-    subColor:    "rgba(255,255,255,0.75)",
+    textColor: "#ffffff",
+    subColor: "rgba(255,255,255,0.75)",
     accentColor: "rgba(255,255,255,0.9)",
     // overlayStyle: "linear-gradient(to right, rgba(245,243,255,0.96) 0%, rgba(245,243,255,0.82) 32%, rgba(245,243,255,0.25) 55%, rgba(245,243,255,0.0) 72%)",
     // textColor:   "#1e1b4b",
@@ -407,14 +407,14 @@ function TrendingItem({ rank, anime, onClick }) {
 export default function Home() {
   const navigate = useNavigate();
   const [slideIdx, setSlideIdx] = useState(0);
-const totalSlides = SLIDES.length;
+  const totalSlides = SLIDES.length;
 
-useEffect(() => {
-  const timer = setInterval(() => {
-    setSlideIdx(i => (i + 1) % totalSlides);
-  }, 8000);
-  return () => clearInterval(timer);
-}, [totalSlides]);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSlideIdx(i => (i + 1) % totalSlides);
+    }, 8000);
+    return () => clearInterval(timer);
+  }, [totalSlides]);
 
   const { data: trending = [], isLoading: trendingLoading } = useQuery({
     queryKey: ["trending"], queryFn: () => getTrending(1),
@@ -435,7 +435,7 @@ useEffect(() => {
         totalSlides={totalSlides}
         onPrev={() => setSlideIdx(i => (i - 1 + totalSlides) % totalSlides)}
         onNext={() => setSlideIdx(i => (i + 1) % totalSlides)}
-        onAddToList={() => {}}
+        onAddToList={() => { }}
         onViewAnime={() => navigate("/explore")}
       />
 
@@ -443,7 +443,7 @@ useEffect(() => {
       <SearchSection onSearch={handleSearch} onChip={handleSearch} />
 
       {/* ── Continue Watching ── */}
-      {watchList.length>0 && (
+      {watchList.length > 0 && (
         <div style={{ marginBottom: 32 }}>
           <SectionHeader title="Continue Watching" onViewAll={() => navigate("/list")} />
           <div style={{ display: "flex", gap: 14, overflowX: "auto", paddingBottom: 4 }} className="no-scroll">
