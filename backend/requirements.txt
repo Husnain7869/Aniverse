@@ -11,3 +11,4 @@ pydantic-settings==2.9.1
 openai==1.82.1
 anthropic==0.49.0
 python-dotenv==1.1.0
+email-validator==2.2.0
