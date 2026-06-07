@@ -5,7 +5,7 @@ import AnimeCard from "../components/AnimeCard";
 import { getTrending, getSeasonal } from "../api/anilist";
 import { getLists } from "../api/backend";
 
-import frierenBanner from "./banners/frieren.png";
+import frierenBanner from "./banners/Frieren.png";
 import soloLevelingBanner from "./banners/SoloLeveling.png";
 import demonSlayerBanner from "./banners/DemonSlayer.png";
 
