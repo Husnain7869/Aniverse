@@ -93,12 +93,12 @@ export default function Navbar() {
         {NAV.map(({ to, label }) => (
           <NavLink key={to} to={to} end={to === "/"} style={({ isActive }) => ({
             display: "inline-flex", alignItems: "center",
-            padding: "6px 15px", borderRadius: 99,
+            padding: "4px 15px", borderRadius: 0,
             fontSize: 14, fontWeight: isActive ? 700 : 500,
             textDecoration: "none", transition: "all .15s",
             color: isActive ? "#7c3aed" : "#6b7280",
             borderBottom: isActive ? "2px solid #7c3aed" : "2px solid transparent",
-            borderRadius: 0, paddingBottom: 4, paddingTop: 4, marginRight: 4,
+            marginRight: 4,
           })}>
             {label}
           </NavLink>
