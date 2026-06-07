@@ -5,9 +5,9 @@ import AnimeCard from "../components/AnimeCard";
 import { getTrending, getSeasonal } from "../api/anilist";
 import { getLists } from "../api/backend";
 
-import frierenBanner  from "./banners/frieren.png";
-import soloLevelingBanner from "./banners/SoloLeveling.png";
-import demonSlayerBanner  from "./banners/DemonSlayer.png";
+const frierenBanner      = "https://s4.anilist.co/file/anilistcdn/media/anime/banner/154587-RIHCMnBAQzXv.jpg";
+const soloLevelingBanner = "https://s4.anilist.co/file/anilistcdn/media/anime/banner/166531-ooZMBnFUcJhO.jpg";
+const demonSlayerBanner  = "https://s4.anilist.co/file/anilistcdn/media/anime/banner/101922-YetISdb9bZBl.jpg";
 
 // ── SVG Icons ────────────────────────────────────────────────────────────────
 const IconSearch = () => (

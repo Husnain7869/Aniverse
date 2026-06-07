@@ -439,12 +439,12 @@ export default function MyList() {
             return (
               <button key={key} onClick={() => setTab(key)} style={{
                 display: "inline-flex", alignItems: "center", gap: 6,
-                padding: "7px 16px", borderRadius: 99, border: "none",
+                padding: "7px 16px", borderRadius: 99,
+                border: active ? "none" : "1px solid #ede9fe",
                 background: active ? "#7c3aed" : "#fff",
                 color: active ? "#fff" : "#6b7280",
                 fontSize: 13, fontWeight: active ? 700 : 600,
                 cursor: "pointer", boxShadow: active ? "0 3px 10px rgba(124,58,237,0.30)" : "0 1px 4px rgba(0,0,0,0.06)",
-                border: active ? "none" : "1px solid #ede9fe",
                 transition: "all .15s",
               }}>
                 <Icon /> {label}
