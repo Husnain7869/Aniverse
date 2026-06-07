@@ -11,11 +11,12 @@ from typing import List
 from ..models.anime_list import AnimeList
 from ..models.rating import Rating, WatchActivity
 from ..schemas.schemas import (
-    UserStats, GenreBreakdown, MonthlyActivity, ScoreBucket
+    UserStats, GenreBreakdown, MonthlyActivity, ScoreBucket,
+    FavoriteAnime, TimelineEvent
 )
 
 
-async def compute_user_stats(user_id: int, db: AsyncSession) -> UserStats:
+async def compute_user_stats(user_id: int, db: AsyncSession, user=None) -> UserStats:
     # ── 1. Fetch all list entries ─────────────────────────────────────────────
     list_result = await db.execute(
         select(AnimeList).where(AnimeList.user_id == user_id)
@@ -124,6 +125,72 @@ async def compute_user_stats(user_id: int, db: AsyncSession) -> UserStats:
     # ── 11. Level based on total_episodes ─────────────────────────────────────
     level = max(1, total_episodes // 50)
 
+    # ── 12. Favorite anime (highest user score, fallback to first completed) ─────
+    favorite_anime = None
+    scored = [(e.user_score or 0, e) for e in entries if e.user_score]
+    if scored:
+        best = max(scored, key=lambda x: x[0])[1]
+        favorite_anime = FavoriteAnime(
+            anilist_id=best.anilist_id,
+            title=best.title,
+            cover_image=best.cover_image,
+            user_score=best.user_score,
+            genres=best.genres or [],
+        )
+    elif ratings:
+        best_rating = max(ratings, key=lambda r: r.score)
+        entry_map = {e.anilist_id: e for e in entries}
+        e = entry_map.get(best_rating.anilist_id)
+        if e:
+            favorite_anime = FavoriteAnime(
+                anilist_id=e.anilist_id,
+                title=e.title,
+                cover_image=e.cover_image,
+                user_score=best_rating.score,
+                genres=e.genres or [],
+            )
+
+    # ── 13. Timeline events from list entries ─────────────────────────────────
+    timeline: list[TimelineEvent] = []
+    for e in sorted(entries, key=lambda x: x.created_at):
+        date_str = e.created_at.strftime("%b %d, %Y").replace(" 0", " ")
+        if e.status == "completed":
+            kind = "completed"
+            label = f"Completed {e.title}"
+        elif e.status == "watching":
+            kind = "started"
+            label = f"Started watching {e.title}"
+        else:
+            kind = "added"
+            label = f"Added {e.title} to your list"
+        timeline.append(TimelineEvent(
+            date=date_str,
+            label=label,
+            anime_title=e.title,
+            cover_image=e.cover_image,
+            kind=kind,
+            episode=e.progress if e.progress > 0 else None,
+        ))
+
+    # Milestone event
+    if total_episodes > 0:
+        timeline.append(TimelineEvent(
+            date=datetime.utcnow().strftime("%b %d, %Y").replace(" 0", " "),
+            label=f"Reached {total_episodes} episodes watched",
+            anime_title="",
+            cover_image=None,
+            kind="milestone",
+            episode=total_episodes,
+        ))
+
+    # Most recent 4 + milestone
+    timeline = timeline[-5:] if len(timeline) > 5 else timeline
+
+    # ── 14. Member since ─────────────────────────────────────────────────────
+    member_since = ""
+    if user and hasattr(user, 'created_at') and user.created_at:
+        member_since = user.created_at.strftime("%B %Y")
+
     return UserStats(
         watching=watching,
         completed=completed,
@@ -140,6 +207,9 @@ async def compute_user_stats(user_id: int, db: AsyncSession) -> UserStats:
         monthly_activity=monthly_activity,
         current_streak_days=streak,
         level=level,
+        favorite_anime=favorite_anime,
+        timeline=timeline,
+        member_since=member_since,
     )
 
 

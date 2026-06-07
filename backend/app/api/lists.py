@@ -42,6 +42,17 @@ async def add_to_list(
         raise HTTPException(400, "Anime already in your list")
 
     entry = AnimeList(user_id=current_user.id, **data.model_dump())
+
+    # Auto-set timestamps & progress on creation
+    if entry.status == "watching" and not entry.start_date:
+        entry.start_date = datetime.utcnow()
+    elif entry.status == "completed":
+        entry.finish_date = datetime.utcnow()
+        if not entry.start_date:
+            entry.start_date = datetime.utcnow()
+        if entry.total_episodes:
+            entry.progress = entry.total_episodes
+
     db.add(entry)
     await db.commit()
     await db.refresh(entry)
@@ -72,20 +83,30 @@ async def update_entry(
 
     old_progress = entry.progress
 
+    # Apply updates from request body
     for key, val in data.model_dump(exclude_none=True).items():
         setattr(entry, key, val)
 
-    # Auto-set timestamps
-    if data.status == "watching" and not entry.start_date:
-        entry.start_date = datetime.utcnow()
-    if data.status == "completed":
-        entry.finish_date = datetime.utcnow()
-        if entry.total_episodes:
-            entry.progress = entry.total_episodes
+    # 1. If progress has been set to equal or exceed total_episodes, auto-complete
+    if entry.total_episodes and entry.progress >= entry.total_episodes:
+        entry.status = "completed"
 
-    # Record watch activity for episode progress changes
+    # 2. If status was set to completed, ensure progress equals total_episodes
+    if entry.status == "completed" and entry.total_episodes:
+        entry.progress = entry.total_episodes
+
+    # 3. Auto-set timestamps
+    if entry.status == "watching" and not entry.start_date:
+        entry.start_date = datetime.utcnow()
+    if entry.status == "completed":
+        if not entry.finish_date:
+            entry.finish_date = datetime.utcnow()
+        if not entry.start_date:
+            entry.start_date = datetime.utcnow()
+
+    # 4. Record watch activity for episode progress changes (whether explicit or implicit)
     new_progress = entry.progress
-    if data.progress is not None and new_progress > old_progress:
+    if new_progress > old_progress:
         delta = new_progress - old_progress
         entry.last_watched = datetime.utcnow()
         act = WatchActivity(

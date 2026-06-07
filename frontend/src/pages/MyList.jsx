@@ -70,10 +70,17 @@ function AnimeListCard({ entry, onNavigate, onDelete, onUpdate }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [editing, setEditing]   = useState(false);
   const [prog, setProg]         = useState(entry.progress);
+  const [status, setStatus]     = useState(entry.status);
 
   const total = entry.total_episodes || 13;
   const pct   = Math.min(100, Math.round((entry.progress / Math.max(total, 1)) * 100));
   const addedDate = entry.start_date ? new Date(entry.start_date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "Jun 2, 2026";
+
+  const startEditing = () => {
+    setProg(entry.progress);
+    setStatus(entry.status);
+    setEditing(true);
+  };
 
   return (
     <div style={{
@@ -159,16 +166,48 @@ function AnimeListCard({ entry, onNavigate, onDelete, onUpdate }) {
           <div style={{ fontSize: 11, fontWeight: 600, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 0.8, marginBottom: 8 }}>Episodes</div>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
             {editing ? (
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <input type="number" value={prog} onChange={e => setProg(+e.target.value)}
-                  style={{ width: 56, background: "#f5f3ff", border: "1.5px solid #a78bfa", borderRadius: 8, padding: "4px 8px", fontSize: 22, fontWeight: 800, color: "#1e1b4b", outline: "none", textAlign: "center" }} />
-                <button onClick={() => { onUpdate({ progress: prog }); setEditing(false); }}
-                  style={{ padding: "5px 12px", background: "#7c3aed", border: "none", borderRadius: 8, color: "#fff", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>Save</button>
-                <button onClick={() => setEditing(false)}
-                  style={{ padding: "5px 10px", background: "#f3f0fb", border: "none", borderRadius: 8, color: "#6b7280", fontSize: 12, cursor: "pointer" }}>Cancel</button>
+              <div style={{ display: "flex", flexDirection: "column", gap: 8, width: "100%" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                  <select value={status} onChange={e => {
+                    const nextStatus = e.target.value;
+                    setStatus(nextStatus);
+                    if (nextStatus === "completed") {
+                      setProg(total);
+                    }
+                  }} style={{
+                    background: "#f5f3ff", border: "1.5px solid #a78bfa", borderRadius: 8,
+                    padding: "6px 10px", fontSize: 13, fontWeight: 600, color: "#1e1b4b",
+                    outline: "none", cursor: "pointer", flex: 1, minWidth: 120
+                  }}>
+                    <option value="plan_to_watch">Plan to Watch</option>
+                    <option value="watching">Watching</option>
+                    <option value="completed">Completed</option>
+                    <option value="on_hold">On Hold</option>
+                    <option value="dropped">Dropped</option>
+                  </select>
+                  <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                    <input type="number" value={prog} onChange={e => {
+                      const nextProg = +e.target.value;
+                      setProg(nextProg);
+                      if (nextProg >= total) {
+                        setStatus("completed");
+                      } else if (status === "completed" && nextProg < total) {
+                        setStatus("watching");
+                      }
+                    }}
+                      style={{ width: 56, background: "#f5f3ff", border: "1.5px solid #a78bfa", borderRadius: 8, padding: "4px 8px", fontSize: 16, fontWeight: 800, color: "#1e1b4b", outline: "none", textAlign: "center" }} />
+                    <span style={{ fontSize: 12, color: "#9ca3af", fontWeight: 500 }}>/ {total}</span>
+                  </div>
+                </div>
+                <div style={{ display: "flex", gap: 6 }}>
+                  <button onClick={() => { onUpdate({ progress: prog, status }); setEditing(false); }}
+                    style={{ flex: 1, padding: "6px 12px", background: "linear-gradient(135deg,#9333ea,#7c3aed)", border: "none", borderRadius: 8, color: "#fff", fontSize: 12, fontWeight: 700, cursor: "pointer", boxShadow: "0 2px 6px rgba(124,58,237,0.2)" }}>Save</button>
+                  <button onClick={() => setEditing(false)}
+                    style={{ padding: "6px 12px", background: "#f3f0fb", border: "none", borderRadius: 8, color: "#6b7280", fontSize: 12, cursor: "pointer" }}>Cancel</button>
+                </div>
               </div>
             ) : (
-              <div style={{ display: "flex", alignItems: "baseline", gap: 4, cursor: "pointer" }} onClick={() => setEditing(true)}>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 4, cursor: "pointer" }} onClick={startEditing}>
                 <span style={{ fontSize: 26, fontWeight: 800, color: "#7c3aed", lineHeight: 1 }}>{entry.progress}</span>
                 <span style={{ fontSize: 14, color: "#9ca3af", fontWeight: 500 }}>/ {total}</span>
               </div>
@@ -219,7 +258,7 @@ function AnimeListCard({ entry, onNavigate, onDelete, onUpdate }) {
             boxShadow: "0 8px 32px rgba(124,58,237,0.14)", padding: 6, minWidth: 150,
           }}>
             {[
-              { label: "Edit Progress", Icon: IEdit,  action: () => { setEditing(true); setMenuOpen(false); }, color: "#6b7280" },
+              { label: "Edit Progress", Icon: IEdit,  action: () => { startEditing(); setMenuOpen(false); }, color: "#6b7280" },
               { label: "View Details",  Icon: IChevRight, action: () => { onNavigate(); setMenuOpen(false); }, color: "#6b7280" },
               { label: "Remove",        Icon: ITrash, action: () => { onDelete(); setMenuOpen(false); }, color: "#ef4444" },
             ].map(({ label, Icon, action, color }) => (

@@ -18,4 +18,4 @@ async def get_stats(
     Returns fully computed statistics from the user's actual database records.
     No hardcoded values — every number is derived from real data.
     """
-    return await compute_user_stats(current_user.id, db)
+    return await compute_user_stats(current_user.id, db, user=current_user)

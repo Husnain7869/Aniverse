@@ -4,7 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import AnimeCard from "../components/AnimeCard";
 import { Badge, Card, Skeleton } from "../components/ui";
 import { getAnimeDetails } from "../api/anilist";
-import { addToList, getLists, upsertRating, getRatingFor } from "../api/backend";
+import { addToList, getLists, updateEntry, upsertRating, getRatingFor } from "../api/backend";
 
 const TABS = ["Overview","Characters","Staff","Related","Recommendations"];
 
@@ -40,7 +40,8 @@ export default function AnimeDetails() {
   const { data: myList=[] } = useQuery({ queryKey:["list","all"], queryFn:()=>getLists() });
   const { data: myRating } = useQuery({ queryKey:["rating",id], queryFn:()=>getRatingFor(+id), retry:false });
 
-  const inList = myList.some(e=>e.anilist_id===+id);
+  const listEntry = myList.find(e=>e.anilist_id===+id);
+  const inList = !!listEntry;
 
   const addMut = useMutation({
     mutationFn: () => addToList({
@@ -54,6 +55,15 @@ export default function AnimeDetails() {
       genres:      anime?.genres || [],
       avg_episode_duration: anime?.duration || 24,
     }),
+    onSuccess: () => { qc.invalidateQueries(["list"]); qc.invalidateQueries(["stats"]); },
+  });
+
+  const updateMut = useMutation({
+    mutationFn: (data) => {
+      if (listEntry) {
+        return updateEntry(listEntry.id, data);
+      }
+    },
     onSuccess: () => { qc.invalidateQueries(["list"]); qc.invalidateQueries(["stats"]); },
   });
 
@@ -113,7 +123,13 @@ export default function AnimeDetails() {
 
             <div style={{ display:"flex",gap:12,alignItems:"center" }}>
               {inList ? (
-                <div style={{ padding:"10px 20px",background:"#d1fae5",border:"1px solid #6ee7b7",borderRadius:99,color:"#065f46",fontSize:13,fontWeight:700 }}>✓ In Your List</div>
+                <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+                  <div style={{ padding:"9px 20px",background:"#d1fae5",border:"1px solid #6ee7b7",borderRadius:99,color:"#065f46",fontSize:13,fontWeight:700 }}>✓ In Your List</div>
+                  <select value={listEntry?.status || "plan_to_watch"} onChange={e=>updateMut.mutate({ status: e.target.value })}
+                    style={{ background:"var(--surface)",border:"1.5px solid var(--border)",borderRadius:10,padding:"9px 14px",fontSize:13,color:"var(--text-secondary)",outline:"none",cursor:"pointer" }}>
+                    {[["plan_to_watch","Plan to Watch"],["watching","Watching"],["completed","Completed"],["on_hold","On Hold"],["dropped","Dropped"]].map(([v,l])=><option key={v} value={v}>{l}</option>)}
+                  </select>
+                </div>
               ) : (
                 <>
                   <select value={status} onChange={e=>setStatus(e.target.value)}

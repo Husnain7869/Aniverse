@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import useAuthStore from "./store/authStore";
 import Navbar from "./components/Navbar";
+import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import MyList from "./pages/MyList";
 import Explore from "./pages/Explore";
@@ -24,7 +25,7 @@ function Layout({ children }) {
 
 function PrivateRoute({ children }) {
   const { isAuthenticated } = useAuthStore();
-  return isAuthenticated ? children : <Navigate to="/login" replace />;
+  return isAuthenticated ? children : <Navigate to="/landing" replace />;
 }
 
 export default function App() {
@@ -32,6 +33,7 @@ export default function App() {
     <Routes>
       <Route path="/login"    element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/landing"  element={<Landing />} />
       <Route path="/" element={<PrivateRoute><Layout><Home /></Layout></PrivateRoute>} />
       <Route path="/list" element={<PrivateRoute><Layout><MyList /></Layout></PrivateRoute>} />
       <Route path="/explore" element={<PrivateRoute><Layout><Explore /></Layout></PrivateRoute>} />

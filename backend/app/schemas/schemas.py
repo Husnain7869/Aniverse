@@ -103,6 +103,21 @@ class ScoreBucket(BaseModel):
     range: str       # "1-2", "3-4", …
     count: int
 
+class FavoriteAnime(BaseModel):
+    anilist_id: int
+    title: str
+    cover_image: Optional[str]
+    user_score: float
+    genres: Optional[List[str]]
+
+class TimelineEvent(BaseModel):
+    date: str          # "Jun 6, 2025"
+    label: str         # "Started watching Jujutsu Kaisen"
+    anime_title: str
+    cover_image: Optional[str]
+    kind: str          # "started" | "completed" | "added" | "milestone"
+    episode: Optional[int]
+
 class UserStats(BaseModel):
     # Counts
     watching: int
@@ -131,6 +146,11 @@ class UserStats(BaseModel):
     current_streak_days: int
 
     level: int
+
+    # New fields for redesigned Stats page
+    favorite_anime: Optional[FavoriteAnime]
+    timeline: List[TimelineEvent]
+    member_since: str   # e.g. "June 2025"
 
 
 # ── Recommendations ───────────────────────────────────────────────────────────
