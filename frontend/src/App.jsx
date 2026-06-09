@@ -16,7 +16,7 @@ function Layout({ children }) {
   return (
     <div style={{ minHeight:"100vh", background:"var(--bg)", display:"flex", flexDirection:"column" }}>
       <Navbar />
-      <main style={{ flex:1, maxWidth:1900, width:"100%", margin:"0 auto", padding:"28px 32px", boxSizing:"border-box" }}>
+      <main className="page-content" style={{ flex:1, maxWidth:1900, width:"100%", margin:"0 auto", boxSizing:"border-box" }}>
         {children}
       </main>
     </div>

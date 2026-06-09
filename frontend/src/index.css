@@ -139,3 +139,186 @@ a { text-decoration: none; color: inherit; }
   gap: 7px;
 }
 .btn-ghost:hover { border-color: var(--purple-400); color: var(--purple-600); background: var(--purple-50); }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   RESPONSIVE / MOBILE
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Viewport meta is set in index.html — these rules handle small screens */
+
+/* ── Layout wrapper that pages sit inside ── */
+.page-content {
+  padding: 28px 32px;
+}
+
+@media (max-width: 768px) {
+  .page-content {
+    padding: 16px 14px;
+  }
+}
+
+/* ── Generic grid helpers ── */
+@media (max-width: 900px) {
+  /* 3-col → 1-col */
+  [style*="grid-template-columns: 1fr 1.2fr 1fr"],
+  [style*="grid-template-columns: 1fr 1.25fr 1fr"],
+  [style*="grid-template-columns: repeat(3,1fr)"],
+  [style*="gridTemplateColumns: \"repeat(3,1fr)\""] {
+    grid-template-columns: 1fr !important;
+  }
+  /* 2-col → 1-col */
+  [style*="grid-template-columns: 1fr 340px"],
+  [style*="grid-template-columns: 1fr 320px"],
+  [style*="grid-template-columns: 1fr 360px"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Stats page hero banner ── */
+@media (max-width: 768px) {
+  /* Negative-margin bleed banner */
+  [style*="marginLeft: -32"] {
+    margin-left: -14px !important;
+    margin-right: -14px !important;
+    margin-top: -16px !important;
+    border-radius: 0 !important;
+  }
+  /* Banner content padding */
+  [style*="padding: \"28px 32px\""] {
+    padding: 18px 16px !important;
+  }
+}
+
+/* ── Navbar mobile overrides ── */
+@media (max-width: 768px) {
+  .navbar-links   { display: none !important; }
+  .navbar-search  { display: none !important; }
+  .navbar-bell    { display: none !important; }
+  .navbar-mobile-menu { display: flex !important; }
+}
+
+/* Mobile drawer nav */
+.mobile-nav-drawer {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+}
+.mobile-nav-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(30,27,75,0.45);
+  backdrop-filter: blur(4px);
+}
+.mobile-nav-panel {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 72vw;
+  max-width: 300px;
+  background: #fff;
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 4px 0 40px rgba(124,58,237,0.18);
+  overflow-y: auto;
+}
+.mobile-nav-drawer.open { display: flex; }
+
+/* ── Card padding on mobile ── */
+@media (max-width: 768px) {
+  .card { padding: 16px !important; }
+}
+
+/* ── Landing page mobile ── */
+@media (max-width: 768px) {
+  /* Hide floating cards on very small screens */
+  .landing-float-card { display: none !important; }
+
+  /* Hero section */
+  .landing-hero {
+    min-height: 70vh !important;
+    padding: 60px 20px 40px !important;
+  }
+
+  /* Feature cards → stack */
+  .landing-features {
+    grid-template-columns: 1fr !important;
+    padding: 40px 20px !important;
+  }
+
+  /* Stats row → stack */
+  .landing-stats {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+    padding: 32px 20px !important;
+  }
+
+  /* Demo card */
+  .landing-demo {
+    padding: 0 20px 60px !important;
+  }
+
+  /* CTA section */
+  .landing-cta {
+    padding: 0 20px 60px !important;
+  }
+  .landing-cta > div {
+    padding: 44px 24px !important;
+  }
+
+  /* Landing navbar */
+  .landing-nav-links { display: none !important; }
+  .landing-nav-auth  { display: none !important; }
+  .landing-nav-hamburger { display: flex !important; }
+}
+
+/* ── Auth pages (Login / Register) mobile ── */
+@media (max-width: 768px) {
+  .auth-float-card  { display: none !important; }
+  .auth-card-wrap   { padding: 60px 16px 40px !important; }
+  .auth-card        { padding: 28px 22px !important; border-radius: 20px !important; }
+}
+
+/* ── Explore / grid pages ── */
+@media (max-width: 640px) {
+  /* Anime grid: 2 cols on mobile */
+  [style*="repeat(auto-fill, minmax(160px"],
+  [style*="repeat(auto-fill, minmax(180px"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ── MyList page ── */
+@media (max-width: 768px) {
+  [style*="grid-template-columns: 240px 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Timeline rows: allow wrapping ── */
+@media (max-width: 640px) {
+  .timeline-row {
+    flex-wrap: wrap;
+    gap: 8px !important;
+  }
+  .timeline-badge { display: none !important; }
+}
+
+/* ── Donut chart: center properly ── */
+@media (max-width: 640px) {
+  .quick-stats-donut { width: 130px !important; height: 130px !important; }
+}
+
+/* ── Text scaling ── */
+@media (max-width: 480px) {
+  h1 { font-size: clamp(22px, 6vw, 36px) !important; }
+  h2 { font-size: clamp(18px, 5vw, 28px) !important; }
+}
+
+/* ── Demo card on mobile ── */
+@media (max-width: 600px) {
+  .demo-card-inner { flex-direction: column !important; }
+  .demo-card-cover { width: 70px !important; }
+}
+
