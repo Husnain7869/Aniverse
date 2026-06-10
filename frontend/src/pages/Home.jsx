@@ -6,9 +6,9 @@ import { getTrending, getSeasonal } from "../api/anilist";
 import { getLists } from "../api/backend";
 import { useIsMobile } from "../hooks/useIsMobile";
 
-import frierenBanner from "./banners/frieren.png";
-import soloLevelingBanner from "./banners/SoloLeveling.png";
-import demonSlayerBanner from "./banners/DemonSlayer.png";
+import frierenBanner from "./banners/Frieren.png";
+import soloLevelingBanner from "./banners/Sololeveling.png";
+import demonSlayerBanner from "./banners/Demonslayer.png";
 
 // ── SVG Icons ────────────────────────────────────────────────────────────────
 const IconSearch = () => (
