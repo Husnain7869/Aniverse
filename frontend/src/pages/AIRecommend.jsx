@@ -4,6 +4,7 @@ import { Card } from "../components/ui";
 import { getRecommendations } from "../api/backend";
 import { getStats } from "../api/backend";
 import useAuthStore from "../store/authStore";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 const CHIPS = [
   "Recommend something based on my taste",
@@ -19,6 +20,8 @@ const INIT = [{
 }];
 
 export default function AIRecommend() {
+  const isMobile = useIsMobile();
+  const [showSidebar, setShowSidebar] = useState(false); // mobile sidebar toggle
   const [messages, setMessages] = useState(INIT);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -58,9 +61,9 @@ export default function AIRecommend() {
   const maxGenrePct = topGenres[0]?.percentage || 1;
 
   return (
-    <div className="fade-up" style={{ height:"calc(100vh - 130px)", display:"flex", gap:20 }}>
+    <div className="fade-up" style={{ height: isMobile ? "auto" : "calc(100vh - 130px)", display: "flex", flexDirection: isMobile ? "column" : "row", gap: 20 }}>
       {/* Chat panel */}
-      <div style={{ flex:1, display:"flex", flexDirection:"column", background:"var(--surface)", border:"1px solid var(--border)", borderRadius:20, overflow:"hidden", boxShadow:"var(--shadow-card)" }}>
+      <div style={{ flex:1, display:"flex", flexDirection:"column", background:"var(--surface)", border:"1px solid var(--border)", borderRadius:20, overflow:"hidden", boxShadow:"var(--shadow-card)", minHeight: isMobile ? "70vh" : "auto" }}>
         {/* Header */}
         <div style={{ padding:"18px 24px", borderBottom:"1px solid var(--border)", background:"linear-gradient(135deg,var(--purple-50),var(--surface))", display:"flex", alignItems:"center", gap:12 }}>
           <div style={{ width:44,height:44,borderRadius:14,background:"linear-gradient(135deg,var(--purple-600),var(--purple-700))",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,boxShadow:"0 4px 12px rgba(124,58,237,0.3)" }}>✦</div>
@@ -68,8 +71,21 @@ export default function AIRecommend() {
             <div style={{ fontSize:16,fontWeight:800,color:"var(--text-primary)" }}>Shiori AI</div>
             <div style={{ fontSize:12,color:"var(--text-muted)" }}>Personalized to your watch history</div>
           </div>
-          <div style={{ marginLeft:"auto", fontSize:11, color:"var(--text-muted)", background:"var(--purple-50)", border:"1px solid var(--purple-200)", borderRadius:99, padding:"3px 10px" }}>
-            {stats?.total_anime || 0} anime in context
+          <div style={{ marginLeft:"auto", display:"flex", alignItems:"center", gap:8 }}>
+            {isMobile && (
+              <button onClick={() => setShowSidebar(s => !s)} style={{
+                fontSize:11, fontWeight:700, color:"var(--purple-600)",
+                background:"var(--purple-50)", border:"1px solid var(--purple-200)",
+                borderRadius:99, padding:"5px 12px", cursor:"pointer",
+              }}>
+                {showSidebar ? "Hide Stats" : "My Stats"}
+              </button>
+            )}
+            {!isMobile && (
+              <div style={{ fontSize:11, color:"var(--text-muted)", background:"var(--purple-50)", border:"1px solid var(--purple-200)", borderRadius:99, padding:"3px 10px" }}>
+                {stats?.total_anime || 0} anime in context
+              </div>
+            )}
           </div>
         </div>
 
@@ -131,8 +147,9 @@ export default function AIRecommend() {
         </div>
       </div>
 
-      {/* Right sidebar — REAL data from stats endpoint */}
-      <div style={{ width:260, display:"flex", flexDirection:"column", gap:16, overflowY:"auto" }} className="no-scroll">
+      {/* Right sidebar — hidden on mobile unless toggled */}
+      {(!isMobile || showSidebar) && (
+      <div style={{ width: isMobile ? "100%" : 260, display:"flex", flexDirection:"column", gap:16, overflowY:"auto" }} className="no-scroll">
         <Card style={{ padding:20 }}>
           <div style={{ fontSize:14,fontWeight:800,color:"var(--text-primary)",marginBottom:4 }}>Your Taste Profile</div>
           <div style={{ fontSize:11,color:"var(--text-muted)",marginBottom:14 }}>Based on {stats?.total_anime||0} anime in your list</div>
@@ -186,6 +203,7 @@ export default function AIRecommend() {
           ))}
         </Card>
       </div>
+      )}
     </div>
   );
 }

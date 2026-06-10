@@ -4,50 +4,51 @@ import { useState, useEffect } from "react";
 import AnimeCard from "../components/AnimeCard";
 import { getTrending, getSeasonal } from "../api/anilist";
 import { getLists } from "../api/backend";
+import { useIsMobile } from "../hooks/useIsMobile";
 
-import frierenBanner from "./banners/Frieren.png";
-import soloLevelingBanner from "./banners/Sololeveling.png";
-import demonSlayerBanner from "./banners/Demonslayer.png";
+import frierenBanner  from "./banners/frieren.png";
+import soloLevelingBanner from "./banners/SoloLeveling.png";
+import demonSlayerBanner  from "./banners/DemonSlayer.png";
 
 // ── SVG Icons ────────────────────────────────────────────────────────────────
 const IconSearch = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
+    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
   </svg>
 );
 const IconSparkle = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" />
+    <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
   </svg>
 );
 const IconPlus = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-    <path d="M12 5v14M5 12h14" />
+    <path d="M12 5v14M5 12h14"/>
   </svg>
 );
 const IconPlay = () => (
   <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M8 5v14l11-7z" />
+    <path d="M8 5v14l11-7z"/>
   </svg>
 );
 const IconChevronLeft = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M15 18l-6-6 6-6" />
+    <path d="M15 18l-6-6 6-6"/>
   </svg>
 );
 const IconChevronRight = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M9 18l6-6-6-6" />
+    <path d="M9 18l6-6-6-6"/>
   </svg>
 );
 const IconStar = () => (
   <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" stroke="none">
-    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
   </svg>
 );
 const IconFire = () => (
   <svg width="13" height="13" viewBox="0 0 24 24" fill="#a855f7" stroke="none">
-    <path d="M12 2c0 0-5 5-5 10a5 5 0 0 0 10 0c0-2-1-4-2-5 0 3-2 4-3 4s-2-2-2-4c1 0 2-5 2-5z" />
+    <path d="M12 2c0 0-5 5-5 10a5 5 0 0 0 10 0c0-2-1-4-2-5 0 3-2 4-3 4s-2-2-2-4c1 0 2-5 2-5z"/>
   </svg>
 );
 
@@ -55,41 +56,41 @@ const IconFire = () => (
 // objectPosition controls which part of the image shows (e.g. "center top" keeps top)
 const SLIDES = [
   {
-    img: frierenBanner,
+    img:         frierenBanner,
     objectPosition: "center 35%",
-    title: "Frieren: Beyond Journey's End",
+    title:       "Frieren: Beyond Journey's End",
     description: "A journey that offers the precious gift of understanding what it truly means to live.",
-    genres: ["Adventure", "Drama", "Fantasy"],
-    score: 9.3,
+    genres:      ["Adventure", "Drama", "Fantasy"],
+    score:       9.3,
     // The frieren image is already wide & light on the left — use a lighter overlay
     // overlayStyle: "linear-gradient(to right, rgba(245,243,255,0.96) 0%, rgba(245,243,255,0.82) 32%, rgba(245,243,255,0.25) 55%, rgba(245,243,255,0.0) 72%)",
     // textColor:   "#1e1b4b",
     // subColor:    "#6b7280",
   },
   {
-    img: soloLevelingBanner,
+    img:         soloLevelingBanner,
     objectPosition: "center 20%",   // show upper part (character + sky portal)
-    title: "Solo Leveling",
+    title:       "Solo Leveling",
     description: "The weakest hunter in the world awakens a power that will shake the very foundations of reality.",
-    genres: ["Action", "Fantasy", "Adventure"],
-    score: 8.7,
+    genres:      ["Action", "Fantasy", "Adventure"],
+    score:       8.7,
     // Dark image — white text works, but still need left fade so text is readable
     overlayStyle: "linear-gradient(to right, rgba(10,8,25,0.90) 0%, rgba(10,8,25,0.70) 32%, rgba(10,8,25,0.25) 58%, rgba(10,8,25,0.0) 75%)",
-    textColor: "#ffffff",
-    subColor: "rgba(255,255,255,0.75)",
+    textColor:   "#ffffff",
+    subColor:    "rgba(255,255,255,0.75)",
     accentColor: "rgba(255,255,255,0.9)",
-
+   
   },
   {
-    img: demonSlayerBanner,
+    img:         demonSlayerBanner,
     objectPosition: "center 36%",   // show upper part (sky + characters)
-    title: "Demon Slayer: Kimetsu no Yaiba",
+    title:       "Demon Slayer: Kimetsu no Yaiba",
     description: "A boy joins an ancient order of swordsmen to hunt down the demon that slaughtered his family.",
-    genres: ["Action", "Historical", "Supernatural"],
-    score: 8.9,
+    genres:      ["Action", "Historical", "Supernatural"],
+    score:       8.9,
     overlayStyle: "linear-gradient(to right, rgba(15,8,30,0.92) 0%, rgba(15,8,30,0.72) 32%, rgba(15,8,30,0.22) 58%, rgba(15,8,30,0.0) 75%)",
-    textColor: "#ffffff",
-    subColor: "rgba(255,255,255,0.75)",
+    textColor:   "#ffffff",
+    subColor:    "rgba(255,255,255,0.75)",
     accentColor: "rgba(255,255,255,0.9)",
     // overlayStyle: "linear-gradient(to right, rgba(245,243,255,0.96) 0%, rgba(245,243,255,0.82) 32%, rgba(245,243,255,0.25) 55%, rgba(245,243,255,0.0) 72%)",
     // textColor:   "#1e1b4b",
@@ -112,18 +113,17 @@ function arrowBtn(side) {
 }
 
 // ── Hero Banner ──────────────────────────────────────────────────────────────
-function HeroBanner({ slideIndex, totalSlides, onPrev, onNext, onAddToList, onViewAnime }) {
+function HeroBanner({ slideIndex, totalSlides, onPrev, onNext, onAddToList, onViewAnime, isMobile }) {
   const slide = SLIDES[slideIndex];
-  const isLight = slideIndex === 0; // frieren slide has light background
+  const isLight = slideIndex === 0;
 
   return (
     <div style={{
       position: "relative",
       width: "100%",
-      borderRadius: 20,
+      borderRadius: isMobile ? 12 : 20,
       overflow: "hidden",
-      // Aspect ratio matches the inspo: wide cinematic
-      aspectRatio: "3.9 / 1",
+      aspectRatio: isMobile ? "1.6 / 1" : "3.9 / 1",
       marginBottom: 15,
       flexShrink: 0,
       background: "#1a1535",
@@ -157,14 +157,14 @@ function HeroBanner({ slideIndex, totalSlides, onPrev, onNext, onAddToList, onVi
       {/* ── Left content ── */}
       <div style={{
         position: "absolute", inset: 0, zIndex: 2,
-        padding: "0 48px",
+        padding: isMobile ? "0 16px" : "0 48px",
         display: "flex", flexDirection: "column", justifyContent: "center",
-        maxWidth: 480,
+        maxWidth: isMobile ? "90%" : 480,
       }}>
         {/* FEATURED label */}
         <div style={{
-          fontSize: 10.5, fontWeight: 700, letterSpacing: 2.5,
-          textTransform: "uppercase", marginBottom: 12,
+          fontSize: isMobile ? 9 : 10.5, fontWeight: 700, letterSpacing: 2.5,
+          textTransform: "uppercase", marginBottom: isMobile ? 6 : 12,
           color: isLight ? "#9333ea" : "rgba(196,181,253,0.95)",
         }}>
           Featured
@@ -173,8 +173,8 @@ function HeroBanner({ slideIndex, totalSlides, onPrev, onNext, onAddToList, onVi
         {/* Title */}
         <h1 style={{
           fontFamily: "'Playfair Display', serif",
-          fontSize: 36, fontWeight: 800, lineHeight: 1.18,
-          color: slide.textColor, marginBottom: 16,
+          fontSize: isMobile ? 18 : 36, fontWeight: 800, lineHeight: 1.18,
+          color: slide.textColor, marginBottom: isMobile ? 8 : 16,
           textShadow: isLight ? "none" : "0 1px 8px rgba(0,0,0,0.3)",
         }}>
           {slide.title}
@@ -262,8 +262,48 @@ function HeroBanner({ slideIndex, totalSlides, onPrev, onNext, onAddToList, onVi
 // ── Search Section ───────────────────────────────────────────────────────────
 const POPULAR_CHIPS = ["Solo Leveling", "Jujutsu Kaisen", "Demon Slayer", "Attack on Titan", "One Piece"];
 
-function SearchSection({ onSearch, onChip }) {
+function SearchSection({ onSearch, onChip, isMobile }) {
   const [q, setQ] = useState("");
+  if (isMobile) {
+    // Compact mobile version — just search bar + chips, no big heading
+    return (
+      <div style={{
+        background: "#fff", border: "1px solid #e8e4f8",
+        borderRadius: 14, padding: "14px 14px 10px", marginBottom: 10,
+        boxShadow: "0 2px 12px rgba(124,58,237,0.06)",
+      }}>
+        <div style={{ position: "relative", marginBottom: 8 }}>
+          <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#9ca3af", display: "flex" }}>
+            <IconSearch />
+          </span>
+          <input
+            value={q} onChange={e => setQ(e.target.value)}
+            onKeyDown={e => { if (e.key === "Enter" && q.trim()) onSearch(q.trim()); }}
+            placeholder="Search anime..."
+            style={{
+              width: "100%", height: 40, background: "#faf9ff",
+              border: "1.5px solid #e8e4f8", borderRadius: 99,
+              padding: "0 40px 0 38px", fontSize: 13, color: "#1e1b4b",
+              outline: "none", boxSizing: "border-box",
+            }}
+          />
+          <span style={{ position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)", color: "#a855f7", display: "flex" }}>
+            <IconSparkle />
+          </span>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+          <span style={{ fontSize: 11, color: "#9ca3af", fontWeight: 600, flexShrink: 0 }}>Popular:</span>
+          {POPULAR_CHIPS.map(chip => (
+            <button key={chip} onClick={() => onChip(chip)} style={{
+              fontSize: 11, fontWeight: 600, color: "#7c3aed",
+              background: "transparent", border: "1px solid #e9d5ff",
+              borderRadius: 99, padding: "3px 10px", cursor: "pointer",
+            }}>{chip}</button>
+          ))}
+        </div>
+      </div>
+    );
+  }
   return (
     <div style={{
       background: "#fff", border: "1px solid #e8e4f8",
@@ -282,15 +322,13 @@ function SearchSection({ onSearch, onChip }) {
               <IconSearch />
             </span>
             <input
-              value={q}
-              onChange={e => setQ(e.target.value)}
+              value={q} onChange={e => setQ(e.target.value)}
               onKeyDown={e => { if (e.key === "Enter" && q.trim()) onSearch(q.trim()); }}
               placeholder="Search anime, characters, studios..."
               style={{
-                width: "100%", height: 46,
-                background: "#faf9ff", border: "1.5px solid #e8e4f8",
-                borderRadius: 99, padding: "0 48px 0 44px",
-                fontSize: 14, color: "#1e1b4b", outline: "none",
+                width: "100%", height: 46, background: "#faf9ff",
+                border: "1.5px solid #e8e4f8", borderRadius: 99,
+                padding: "0 48px 0 44px", fontSize: 14, color: "#1e1b4b", outline: "none",
               }}
             />
             <span style={{ position: "absolute", right: 16, top: "50%", transform: "translateY(-50%)", color: "#a855f7", display: "flex" }}>
@@ -406,6 +444,7 @@ function TrendingItem({ rank, anime, onClick }) {
 // ── Home Page ────────────────────────────────────────────────────────────────
 export default function Home() {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const [slideIdx, setSlideIdx] = useState(0);
   const totalSlides = SLIDES.length;
 
@@ -424,7 +463,6 @@ export default function Home() {
   });
 
   const handleSearch = (q) => navigate(`/explore?q=${encodeURIComponent(q)}`);
-  const currentSlide = SLIDES[slideIdx];
 
   return (
     <div className="fade-up" style={{ display: "flex", flexDirection: "column" }}>
@@ -433,14 +471,15 @@ export default function Home() {
       <HeroBanner
         slideIndex={slideIdx}
         totalSlides={totalSlides}
+        isMobile={isMobile}
         onPrev={() => setSlideIdx(i => (i - 1 + totalSlides) % totalSlides)}
         onNext={() => setSlideIdx(i => (i + 1) % totalSlides)}
-        onAddToList={() => { }}
+        onAddToList={() => {}}
         onViewAnime={() => navigate("/explore")}
       />
 
       {/* ── Search Section ── */}
-      <SearchSection onSearch={handleSearch} onChip={handleSearch} />
+      <SearchSection onSearch={handleSearch} onChip={handleSearch} isMobile={isMobile} />
 
       {/* ── Continue Watching ── */}
       {watchList.length > 0 && (
@@ -448,7 +487,8 @@ export default function Home() {
           <SectionHeader title="Continue Watching" onViewAll={() => navigate("/list")} />
           <div style={{ display: "flex", gap: 14, overflowX: "auto", paddingBottom: 4 }} className="no-scroll">
             {watchList.slice(0, 6).map(e => (
-              <ContinueCard key={e.id} entry={e} onClick={() => navigate(`/anime/${e.anilist_id}`)} />
+              <ContinueCard key={e.id} entry={e} onClick={() => navigate(`/anime/${e.anilist_id}`)}
+                style={{ width: isMobile ? "75vw" : 290 }} />
             ))}
           </div>
         </div>
@@ -460,7 +500,7 @@ export default function Home() {
         {trendingLoading ? (
           <div style={{ display: "flex", gap: 14 }}>
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="skeleton" style={{ width: 175, height: 255, borderRadius: 14, flexShrink: 0 }} />
+              <div key={i} className="skeleton" style={{ width: isMobile ? 130 : 175, height: isMobile ? 195 : 255, borderRadius: 14, flexShrink: 0 }} />
             ))}
           </div>
         ) : (
@@ -475,8 +515,8 @@ export default function Home() {
       {/* ── Trending This Week ── */}
       <div style={{ marginBottom: 15 }}>
         <SectionHeader title="Trending This Week" onViewAll={() => navigate("/explore")} />
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "4px 32px" }}>
-          {trending.slice(0, 6).map((a, i) => (
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? "0" : "4px 32px" }}>
+          {trending.slice(0, isMobile ? 5 : 6).map((a, i) => (
             <TrendingItem key={a.id} rank={i + 1} anime={a} onClick={() => navigate(`/anime/${a.id}`)} />
           ))}
         </div>
