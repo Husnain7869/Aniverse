@@ -14,9 +14,9 @@ import Register from "./pages/Register";
 
 function Layout({ children }) {
   return (
-    <div style={{ minHeight:"100vh", background:"var(--bg)", display:"flex", flexDirection:"column" }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg)", display: "flex", flexDirection: "column" }}>
       <Navbar />
-      <main className="page-content" style={{ flex:1, maxWidth:1900, width:"100%", margin:"0 auto", boxSizing:"border-box" }}>
+      <main className="page-content" style={{ flex: 1, maxWidth: 1900, width: "100%", margin: "0 auto", boxSizing: "border-box" }}>
         {children}
       </main>
     </div>
@@ -31,9 +31,9 @@ function PrivateRoute({ children }) {
 export default function App() {
   return (
     <Routes>
-      <Route path="/login"    element={<Login />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/landing"  element={<Landing />} />
+      <Route path="/landing" element={<Landing />} />
       <Route path="/" element={<PrivateRoute><Layout><Home /></Layout></PrivateRoute>} />
       <Route path="/list" element={<PrivateRoute><Layout><MyList /></Layout></PrivateRoute>} />
       <Route path="/explore" element={<PrivateRoute><Layout><Explore /></Layout></PrivateRoute>} />
