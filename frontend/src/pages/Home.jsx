@@ -423,7 +423,7 @@ function TrendingItem({ rank, anime, onClick }) {
   const pop = anime?.popularity ? `${(anime.popularity / 1000).toFixed(1)}K` : "—";
 
   return (
-    <div onClick={onClick} style={{ display: "flex", alignItems: "center", gap: 14, cursor: "pointer", padding: "7px 0" }}>
+    <div onClick={onClick} style={{ display: "flex", alignItems: "center", gap: 14, cursor: "pointer", padding: "7px 0", overflow: "hidden", minWidth: 0, }}>
       <div style={{ fontSize: 34, fontWeight: 800, color: "#8154a0", lineHeight: 1, minWidth: 42, textAlign: "right", fontFamily: "'Playfair Display', serif" }}>
         {String(rank).padStart(2, "0")}
       </div>
@@ -515,7 +515,7 @@ export default function Home() {
       {/* ── Trending This Week ── */}
       <div style={{ marginBottom: 15 }}>
         <SectionHeader title="Trending This Week" onViewAll={() => navigate("/explore")} />
-        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? "0" : "4px 32px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? "0" : "4px 32px", overflow: "hidden", }}>
           {trending.slice(0, isMobile ? 5 : 6).map((a, i) => (
             <TrendingItem key={a.id} rank={i + 1} anime={a} onClick={() => navigate(`/anime/${a.id}`)} />
           ))}
