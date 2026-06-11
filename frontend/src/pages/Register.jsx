@@ -180,7 +180,7 @@ export default function Register() {
       {/* Logo top-left */}
       <div style={{ position: "absolute", top: 24, left: 32, display: "flex", alignItems: "center", gap: 8, zIndex: 10 }}>
         <IcLogoLeaf />
-        <span style={{ fontSize: 19, fontWeight: 900, color: "#1e1b4b", letterSpacing: "-0.5px" }}>Shiori</span>
+        <span style={{ fontSize: 19, fontWeight: 900, color: "#1e1b4b", letterSpacing: "-0.5px" }}>AniMind</span>
       </div>
 
       {/* Center card */}
@@ -193,7 +193,7 @@ export default function Register() {
               <IcLeaf />
             </div>
             <h1 style={{ fontSize: 22, fontWeight: 900, color: "#1e1b4b", marginBottom: 6, letterSpacing: "-0.3px" }}>Create your account</h1>
-            <p style={{ fontSize: 13.5, color: "#6b7280", fontWeight: 500 }}>Join Shiori and elevate your anime experience.</p>
+            <p style={{ fontSize: 13.5, color: "#6b7280", fontWeight: 500 }}>Join AniMind and elevate your anime experience.</p>
           </div>
 
           {err && (
@@ -297,7 +297,7 @@ export default function Register() {
 
       {/* Footer */}
       <div style={{ position: "relative", zIndex: 5, textAlign: "center", padding: "0 20px 24px", display: "flex", alignItems: "center", justifyContent: "center", gap: 0, flexWrap: "wrap" }}>
-        <span style={{ fontSize: 12.5, color: "#9ca3af" }}>© 2025 Shiori. All rights reserved.</span>
+        <span style={{ fontSize: 12.5, color: "#9ca3af" }}>© 2026 AniMind. All rights reserved.</span>
         <span style={{ color: "#d1d5db", margin: "0 16px" }}>|</span>
         <a href="#" style={{ fontSize: 12.5, color: "#9ca3af", textDecoration: "none", fontWeight: 600 }}
           onMouseEnter={e => e.target.style.color = "#7c3aed"} onMouseLeave={e => e.target.style.color = "#9ca3af"}>Privacy Policy</a>

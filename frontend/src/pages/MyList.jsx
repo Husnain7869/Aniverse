@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { getLists, updateEntry, deleteEntry } from "../api/backend";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 // ── Icons (SVG, zero emojis) ─────────────────────────────────────────────────
 const IPlay      = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>;
@@ -66,7 +67,7 @@ function StatusPill({ status }) {
 }
 
 // ── Anime Card ───────────────────────────────────────────────────────────────
-function AnimeListCard({ entry, onNavigate, onDelete, onUpdate }) {
+function AnimeListCard({ entry, onNavigate, onDelete, onUpdate, isMobile }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [editing, setEditing]   = useState(false);
   const [prog, setProg]         = useState(entry.progress);
@@ -97,10 +98,11 @@ function AnimeListCard({ entry, onNavigate, onDelete, onUpdate }) {
       onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 6px 28px rgba(124,58,237,0.14)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
       onMouseLeave={e => { e.currentTarget.style.boxShadow = "0 2px 16px rgba(124,58,237,0.07)"; e.currentTarget.style.transform = "none"; }}
     >
-      {/* Bookmark icon top-left of image */}
+      {/* Cover image */}
       <div style={{ position: "relative", flexShrink: 0 }}>
         <div style={{
-          width: 150, height: 200,
+          width: isMobile ? 90 : 150,
+          height: isMobile ? 130 : 200,
           background: "#e8e4f8",
           cursor: "pointer",
         }} onClick={onNavigate}>
@@ -109,10 +111,9 @@ function AnimeListCard({ entry, onNavigate, onDelete, onUpdate }) {
               style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
           )}
         </div>
-        {/* Bookmark overlay */}
         <div style={{
-          position: "absolute", top: 10, left: 10,
-          width: 28, height: 28, borderRadius: 7,
+          position: "absolute", top: 8, left: 8,
+          width: 24, height: 24, borderRadius: 6,
           background: "rgba(124,58,237,0.85)",
           display: "flex", alignItems: "center", justifyContent: "center",
           color: "#fff",
@@ -121,45 +122,79 @@ function AnimeListCard({ entry, onNavigate, onDelete, onUpdate }) {
         </div>
       </div>
 
-      {/* Left content */}
-      <div style={{ flex: 1, padding: "20px 24px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+      {/* Content */}
+      <div style={{ flex: 1, padding: isMobile ? "12px 12px" : "20px 24px", display: "flex", flexDirection: "column", justifyContent: "space-between", minWidth: 0 }}>
         {/* Title row */}
         <div>
           <div style={{ cursor: "pointer" }} onClick={onNavigate}>
-            <div style={{ fontSize: 18, fontWeight: 800, color: "#1e1b4b", marginBottom: 3, letterSpacing: "-0.2px" }}>
+            <div style={{ fontSize: isMobile ? 14 : 18, fontWeight: 800, color: "#1e1b4b", marginBottom: 2, letterSpacing: "-0.2px", whiteSpace: isMobile ? "normal" : "normal", lineHeight: 1.3 }}>
               {entry.title}
             </div>
-            {entry.title_japanese && (
+            {!isMobile && entry.title_japanese && (
               <div style={{ fontSize: 12, color: "#9ca3af", marginBottom: 10, fontWeight: 500 }}>
                 {entry.title_japanese}
               </div>
             )}
           </div>
-          <StatusPill status={entry.status} />
+          <div style={{ marginTop: isMobile ? 4 : 8 }}>
+            <StatusPill status={entry.status} />
+          </div>
         </div>
 
         {/* Meta row */}
-        <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: 14 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: isMobile ? 8 : 14, flexWrap: "wrap" }}>
           {entry.year && (
-            <>
-              <div style={{ display: "flex", alignItems: "center", gap: 5, color: "#9ca3af", fontSize: 12, fontWeight: 500 }}>
-                <ICalendar /> {entry.year}
-              </div>
-              <div style={{ width: 3, height: 3, borderRadius: "50%", background: "#d1d5db" }} />
-            </>
+            <div style={{ display: "flex", alignItems: "center", gap: 4, color: "#9ca3af", fontSize: 11, fontWeight: 500 }}>
+              <ICalendar /> {entry.year}
+            </div>
           )}
           {entry.genres && (
-            <div style={{ fontSize: 12, color: "#9ca3af", fontWeight: 500 }}>
-              {Array.isArray(entry.genres) ? entry.genres.slice(0, 3).join(", ") : entry.genres}
+            <div style={{ fontSize: 11, color: "#9ca3af", fontWeight: 500 }}>
+              {Array.isArray(entry.genres)
+                ? entry.genres.slice(0, isMobile ? 2 : 3).join(", ")
+                : entry.genres}
+            </div>
+          )}
+          {/* On mobile show episode count inline instead of right panel */}
+          {isMobile && (
+            <div style={{ marginLeft: "auto", display: "flex", alignItems: "baseline", gap: 3, cursor: "pointer" }} onClick={startEditing}>
+              <span style={{ fontSize: 18, fontWeight: 800, color: "#7c3aed" }}>{entry.progress}</span>
+              <span style={{ fontSize: 11, color: "#9ca3af" }}>/ {total} ep</span>
             </div>
           )}
         </div>
+
+        {/* Mobile editing form inline */}
+        {isMobile && editing && (
+          <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 8 }}>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              <select value={status} onChange={e => { const v = e.target.value; setStatus(v); if (v === "completed") setProg(total); }}
+                style={{ flex: 1, background: "#f5f3ff", border: "1.5px solid #a78bfa", borderRadius: 8, padding: "6px 8px", fontSize: 12, fontWeight: 600, color: "#1e1b4b", outline: "none" }}>
+                <option value="plan_to_watch">Plan to Watch</option>
+                <option value="watching">Watching</option>
+                <option value="completed">Completed</option>
+                <option value="on_hold">On Hold</option>
+                <option value="dropped">Dropped</option>
+              </select>
+              <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                <input type="number" value={prog} onChange={e => { const v = +e.target.value; setProg(v); if (v >= total) setStatus("completed"); else if (status === "completed" && v < total) setStatus("watching"); }}
+                  style={{ width: 50, background: "#f5f3ff", border: "1.5px solid #a78bfa", borderRadius: 8, padding: "4px 6px", fontSize: 14, fontWeight: 800, color: "#1e1b4b", outline: "none", textAlign: "center" }} />
+                <span style={{ fontSize: 11, color: "#9ca3af" }}>/ {total}</span>
+              </div>
+            </div>
+            <div style={{ display: "flex", gap: 6 }}>
+              <button onClick={() => { onUpdate({ progress: prog, status }); setEditing(false); }}
+                style={{ flex: 1, padding: "7px", background: "linear-gradient(135deg,#9333ea,#7c3aed)", border: "none", borderRadius: 8, color: "#fff", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>Save</button>
+              <button onClick={() => setEditing(false)}
+                style={{ padding: "7px 14px", background: "#f3f0fb", border: "none", borderRadius: 8, color: "#6b7280", fontSize: 12, cursor: "pointer" }}>Cancel</button>
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Divider */}
+      {/* Divider + right panel — desktop only */}
+      {!isMobile && <>
       <div style={{ width: 1, background: "#f3f0fb", alignSelf: "stretch", margin: "16px 0" }} />
-
-      {/* Right panel */}
       <div style={{ width: 340, padding: "20px 24px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
         {/* Episodes + progress */}
         <div>
@@ -224,7 +259,7 @@ function AnimeListCard({ entry, onNavigate, onDelete, onUpdate }) {
         </div>
 
         {/* Added date + View Details */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div style={{ display: "flex", alignItems: isMobile ? "flex-start" : "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
           <div>
             <div style={{ fontSize: 10, color: "#9ca3af", fontWeight: 600, marginBottom: 2 }}>Added on</div>
             <div style={{ display: "flex", alignItems: "center", gap: 5, color: "#6b7280", fontSize: 12, fontWeight: 600 }}>
@@ -240,6 +275,7 @@ function AnimeListCard({ entry, onNavigate, onDelete, onUpdate }) {
           </button>
         </div>
       </div>
+      </>}
 
       {/* Three-dot menu */}
       <div style={{ position: "absolute", top: 14, right: 14 }}>
@@ -313,6 +349,7 @@ function EmptyListState({ onExplore }) {
 
 // ── Main Page ────────────────────────────────────────────────────────────────
 export default function MyList() {
+  const isMobile = useIsMobile();
   const [tab, setTab]       = useState("all");
   const [search, setSearch] = useState("");
   const [sort, setSort]     = useState("last_added");
@@ -431,20 +468,26 @@ export default function MyList() {
       </div>
 
       {/* ── Filter tabs + sort + search ── */}
-      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20, flexWrap: "wrap" }}>
-        {/* Pills */}
-        <div style={{ display: "flex", gap: 6, flex: 1, flexWrap: "wrap" }}>
+      <div style={{ marginBottom: 20 }}>
+        {/* Tab pills row — scrollable on mobile */}
+        <div style={{
+          display: "flex", gap: 6, overflowX: isMobile ? "auto" : "visible",
+          flexWrap: isMobile ? "nowrap" : "wrap",
+          paddingBottom: isMobile ? 4 : 0,
+          marginBottom: isMobile ? 10 : 10,
+        }} className="no-scroll">
           {TABS.map(({ key, label, Icon }) => {
             const active = tab === key;
             return (
               <button key={key} onClick={() => setTab(key)} style={{
                 display: "inline-flex", alignItems: "center", gap: 6,
-                padding: "7px 16px", borderRadius: 99,
-                border: active ? "none" : "1px solid #ede9fe",
+                padding: "7px 14px", borderRadius: 99, border: "none",
                 background: active ? "#7c3aed" : "#fff",
                 color: active ? "#fff" : "#6b7280",
                 fontSize: 13, fontWeight: active ? 700 : 600,
-                cursor: "pointer", boxShadow: active ? "0 3px 10px rgba(124,58,237,0.30)" : "0 1px 4px rgba(0,0,0,0.06)",
+                cursor: "pointer", flexShrink: 0,
+                boxShadow: active ? "0 3px 10px rgba(124,58,237,0.30)" : "0 1px 4px rgba(0,0,0,0.06)",
+                border: active ? "none" : "1px solid #ede9fe",
                 transition: "all .15s",
               }}>
                 <Icon /> {label}
@@ -453,32 +496,35 @@ export default function MyList() {
           })}
         </div>
 
-        {/* Sort */}
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span style={{ fontSize: 12, color: "#9ca3af", fontWeight: 600, whiteSpace: "nowrap" }}>Sort by</span>
-          <select value={sort} onChange={e => setSort(e.target.value)} style={{
-            background: "#fff", border: "1px solid #ede9fe", borderRadius: 10,
-            padding: "7px 12px", fontSize: 13, fontWeight: 600, color: "#1e1b4b",
-            outline: "none", cursor: "pointer",
-          }}>
-            <option value="last_added">Last Added</option>
-            <option value="title">Title</option>
-            <option value="score">Score</option>
-            <option value="progress">Progress</option>
-          </select>
-        </div>
+        {/* Sort + Search row */}
+        <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+          {/* Search */}
+          <div style={{ position: "relative", flex: isMobile ? 1 : "none" }}>
+            <span style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "#9ca3af", display: "flex" }}>
+              <ISearch />
+            </span>
+            <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search your list..."
+              style={{
+                background: "#fff", border: "1px solid #ede9fe", borderRadius: 10,
+                padding: "8px 14px 8px 34px", fontSize: 13, color: "#1e1b4b",
+                width: isMobile ? "100%" : 210, outline: "none", boxSizing: "border-box",
+              }} />
+          </div>
 
-        {/* Search */}
-        <div style={{ position: "relative" }}>
-          <span style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "#9ca3af", display: "flex" }}>
-            <ISearch />
-          </span>
-          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search your list..."
-            style={{
+          {/* Sort */}
+          <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
+            <span style={{ fontSize: 12, color: "#9ca3af", fontWeight: 600, whiteSpace: "nowrap" }}>Sort by</span>
+            <select value={sort} onChange={e => setSort(e.target.value)} style={{
               background: "#fff", border: "1px solid #ede9fe", borderRadius: 10,
-              padding: "8px 14px 8px 34px", fontSize: 13, color: "#1e1b4b",
-              width: 210, outline: "none",
-            }} />
+              padding: "7px 10px", fontSize: 13, fontWeight: 600, color: "#1e1b4b",
+              outline: "none", cursor: "pointer",
+            }}>
+              <option value="last_added">Last Added</option>
+              <option value="title">Title</option>
+              <option value="score">Score</option>
+              <option value="progress">Progress</option>
+            </select>
+          </div>
         </div>
       </div>
 
@@ -504,6 +550,7 @@ export default function MyList() {
             <AnimeListCard
               key={entry.id}
               entry={entry}
+              isMobile={isMobile}
               onNavigate={() => navigate(`/anime/${entry.anilist_id}`)}
               onDelete={() => delMut.mutate(entry.id)}
               onUpdate={data => updMut.mutate({ id: entry.id, data })}

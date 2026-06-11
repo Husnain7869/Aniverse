@@ -77,7 +77,7 @@ def _offline_fallback(prompt: str) -> str:
 
     greetings = ["hi", "hello", "hey", "sup", "yo", "good morning", "good evening", "what's up"]
     if any(p.startswith(g) for g in greetings) or p in greetings:
-        return "Hey! 👋 I'm Shiori AI. I need an OpenAI or Anthropic API key to give personalized recommendations.\n\nAdd `OPENAI_API_KEY=sk-...` to your backend `.env` file and restart. I'll then know exactly what you've watched and what to suggest next!"
+        return "Hey! 👋 I'm AniMind AI. I need an OpenAI or Anthropic API key to give personalized recommendations.\n\nAdd `OPENAI_API_KEY=sk-...` to your backend `.env` file and restart. I'll then know exactly what you've watched and what to suggest next!"
 
     if any(w in p for w in ["dark", "psychological", "thriller", "horror", "disturbing"]):
         return "Some acclaimed dark/psychological anime:\n\n🌑 **Monster** (74 eps, 2004) — A surgeon hunts a serial killer he once saved.\n🌑 **Paranoia Agent** (13 eps, 2004) — Satoshi Kon's only series. Unsettling and brilliant.\n🌑 **Shiki** (22 eps, 2010) — Village horror that asks real moral questions.\n🌑 **91 Days** (13 eps, 2016) — Prohibition-era revenge thriller.\n\n*Add an AI key for picks tailored to your watch history.*"

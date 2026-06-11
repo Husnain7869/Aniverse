@@ -30,7 +30,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="Shiori API",
+    title="AniMind API",
     version="2.0.0",
     lifespan=lifespan,
 )
@@ -55,7 +55,7 @@ app.include_router(ratings.router)
 
 @app.get("/", tags=["Health"])
 def root():
-    return {"status": "ok", "app": "Shiori API", "version": "2.0.0"}
+    return {"status": "ok", "app": "AniMind API", "version": "2.0.0"}
 
 @app.get("/health", tags=["Health"])
 def health():
