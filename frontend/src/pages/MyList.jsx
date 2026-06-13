@@ -5,49 +5,49 @@ import { getLists, updateEntry, deleteEntry } from "../api/backend";
 import { useIsMobile } from "../hooks/useIsMobile";
 
 // ── Icons (SVG, zero emojis) ─────────────────────────────────────────────────
-const IPlay      = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>;
-const ICheck     = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>;
-const IBookmark  = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>;
-const IPause     = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>;
-const IXCircle   = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>;
-const ILayers    = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>;
-const ISearch    = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>;
-const IPlus      = () => <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M12 5v14M5 12h14"/></svg>;
-const IChevRight = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>;
-const IDots      = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>;
-const IStar      = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="#f59e0b" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>;
-const ICalendar  = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>;
-const ISparkle   = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a855f7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>;
-const IEdit      = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>;
-const ITrash     = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>;
+const IPlay = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3" /></svg>;
+const ICheck = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>;
+const IBookmark = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>;
+const IPause = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="6" y="4" width="4" height="16" /><rect x="14" y="4" width="4" height="16" /></svg>;
+const IXCircle = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></svg>;
+const ILayers = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2" /><polyline points="2 17 12 22 22 17" /><polyline points="2 12 12 17 22 12" /></svg>;
+const ISearch = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg>;
+const IPlus = () => <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>;
+const IChevRight = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>;
+const IDots = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2" /><circle cx="12" cy="12" r="2" /><circle cx="19" cy="12" r="2" /></svg>;
+const IStar = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="#f59e0b" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>;
+const ICalendar = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>;
+const ISparkle = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a855f7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" /></svg>;
+const IEdit = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></svg>;
+const ITrash = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6" /><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" /><path d="M10 11v6M14 11v6" /><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" /></svg>;
 
 // ── Tab config ───────────────────────────────────────────────────────────────
 const TABS = [
-  { key: "all",           label: "All",           Icon: ILayers   },
-  { key: "watching",      label: "Watching",      Icon: IPlay     },
-  { key: "completed",     label: "Completed",     Icon: ICheck    },
+  { key: "all", label: "All", Icon: ILayers },
+  { key: "watching", label: "Watching", Icon: IPlay },
+  { key: "completed", label: "Completed", Icon: ICheck },
   { key: "plan_to_watch", label: "Plan to Watch", Icon: IBookmark },
-  { key: "on_hold",       label: "On Hold",       Icon: IPause    },
-  { key: "dropped",       label: "Dropped",       Icon: IXCircle  },
+  { key: "on_hold", label: "On Hold", Icon: IPause },
+  { key: "dropped", label: "Dropped", Icon: IXCircle },
 ];
 
 // ── Stat card config ─────────────────────────────────────────────────────────
 const STAT_CONFIG = [
-  { key: "watching",      label: "Watching",      Icon: IPlay,     iconBg: "#ede9fe", iconColor: "#7c3aed", barColor: "#7c3aed" },
-  { key: "completed",     label: "Completed",     Icon: ICheck,    iconBg: "#d1fae5", iconColor: "#059669", barColor: "#10b981" },
+  { key: "watching", label: "Watching", Icon: IPlay, iconBg: "#ede9fe", iconColor: "#7c3aed", barColor: "#7c3aed" },
+  { key: "completed", label: "Completed", Icon: ICheck, iconBg: "#d1fae5", iconColor: "#059669", barColor: "#10b981" },
   { key: "plan_to_watch", label: "Plan to Watch", Icon: IBookmark, iconBg: "#fee2e2", iconColor: "#dc2626", barColor: "#ef4444" },
-  { key: "on_hold",       label: "On Hold",       Icon: IPause,    iconBg: "#fef3c7", iconColor: "#d97706", barColor: "#f59e0b" },
-  { key: "dropped",       label: "Dropped",       Icon: IXCircle,  iconBg: "#fee2e2", iconColor: "#dc2626", barColor: "#ef4444" },
-  { key: "_total",        label: "Total Anime",   Icon: ILayers,   iconBg: "#ede9fe", iconColor: "#7c3aed", barColor: "#7c3aed" },
+  { key: "on_hold", label: "On Hold", Icon: IPause, iconBg: "#fef3c7", iconColor: "#d97706", barColor: "#f59e0b" },
+  { key: "dropped", label: "Dropped", Icon: IXCircle, iconBg: "#fee2e2", iconColor: "#dc2626", barColor: "#ef4444" },
+  { key: "_total", label: "Total Anime", Icon: ILayers, iconBg: "#ede9fe", iconColor: "#7c3aed", barColor: "#7c3aed" },
 ];
 
 // ── Status badge ─────────────────────────────────────────────────────────────
 const STATUS_STYLE = {
-  watching:      { bg: "#ede9fe", color: "#6d28d9", label: "Watching"      },
-  completed:     { bg: "#d1fae5", color: "#065f46", label: "Completed"     },
+  watching: { bg: "#ede9fe", color: "#6d28d9", label: "Watching" },
+  completed: { bg: "#d1fae5", color: "#065f46", label: "Completed" },
   plan_to_watch: { bg: "#fee2e2", color: "#991b1b", label: "Plan to Watch" },
-  on_hold:       { bg: "#fef3c7", color: "#92400e", label: "On Hold"       },
-  dropped:       { bg: "#fee2e2", color: "#991b1b", label: "Dropped"       },
+  on_hold: { bg: "#fef3c7", color: "#92400e", label: "On Hold" },
+  dropped: { bg: "#fee2e2", color: "#991b1b", label: "Dropped" },
 };
 
 function StatusPill({ status }) {
@@ -69,12 +69,12 @@ function StatusPill({ status }) {
 // ── Anime Card ───────────────────────────────────────────────────────────────
 function AnimeListCard({ entry, onNavigate, onDelete, onUpdate, isMobile }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [editing, setEditing]   = useState(false);
-  const [prog, setProg]         = useState(entry.progress);
-  const [status, setStatus]     = useState(entry.status);
+  const [editing, setEditing] = useState(false);
+  const [prog, setProg] = useState(entry.progress);
+  const [status, setStatus] = useState(entry.status);
 
   const total = entry.total_episodes || 13;
-  const pct   = Math.min(100, Math.round((entry.progress / Math.max(total, 1)) * 100));
+  const pct = Math.min(100, Math.round((entry.progress / Math.max(total, 1)) * 100));
   const addedDate = entry.start_date ? new Date(entry.start_date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "Jun 2, 2026";
 
   const startEditing = () => {
@@ -194,87 +194,87 @@ function AnimeListCard({ entry, onNavigate, onDelete, onUpdate, isMobile }) {
 
       {/* Divider + right panel — desktop only */}
       {!isMobile && <>
-      <div style={{ width: 1, background: "#f3f0fb", alignSelf: "stretch", margin: "16px 0" }} />
-      <div style={{ width: 340, padding: "20px 24px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-        {/* Episodes + progress */}
-        <div>
-          <div style={{ fontSize: 11, fontWeight: 600, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 0.8, marginBottom: 8 }}>Episodes</div>
-          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
-            {editing ? (
-              <div style={{ display: "flex", flexDirection: "column", gap: 8, width: "100%" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-                  <select value={status} onChange={e => {
-                    const nextStatus = e.target.value;
-                    setStatus(nextStatus);
-                    if (nextStatus === "completed") {
-                      setProg(total);
-                    }
-                  }} style={{
-                    background: "#f5f3ff", border: "1.5px solid #a78bfa", borderRadius: 8,
-                    padding: "6px 10px", fontSize: 13, fontWeight: 600, color: "#1e1b4b",
-                    outline: "none", cursor: "pointer", flex: 1, minWidth: 120
-                  }}>
-                    <option value="plan_to_watch">Plan to Watch</option>
-                    <option value="watching">Watching</option>
-                    <option value="completed">Completed</option>
-                    <option value="on_hold">On Hold</option>
-                    <option value="dropped">Dropped</option>
-                  </select>
-                  <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                    <input type="number" value={prog} onChange={e => {
-                      const nextProg = +e.target.value;
-                      setProg(nextProg);
-                      if (nextProg >= total) {
-                        setStatus("completed");
-                      } else if (status === "completed" && nextProg < total) {
-                        setStatus("watching");
+        <div style={{ width: 1, background: "#f3f0fb", alignSelf: "stretch", margin: "16px 0" }} />
+        <div style={{ width: 340, padding: "20px 24px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+          {/* Episodes + progress */}
+          <div>
+            <div style={{ fontSize: 11, fontWeight: 600, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 0.8, marginBottom: 8 }}>Episodes</div>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
+              {editing ? (
+                <div style={{ display: "flex", flexDirection: "column", gap: 8, width: "100%" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                    <select value={status} onChange={e => {
+                      const nextStatus = e.target.value;
+                      setStatus(nextStatus);
+                      if (nextStatus === "completed") {
+                        setProg(total);
                       }
-                    }}
-                      style={{ width: 56, background: "#f5f3ff", border: "1.5px solid #a78bfa", borderRadius: 8, padding: "4px 8px", fontSize: 16, fontWeight: 800, color: "#1e1b4b", outline: "none", textAlign: "center" }} />
-                    <span style={{ fontSize: 12, color: "#9ca3af", fontWeight: 500 }}>/ {total}</span>
+                    }} style={{
+                      background: "#f5f3ff", border: "1.5px solid #a78bfa", borderRadius: 8,
+                      padding: "6px 10px", fontSize: 13, fontWeight: 600, color: "#1e1b4b",
+                      outline: "none", cursor: "pointer", flex: 1, minWidth: 120
+                    }}>
+                      <option value="plan_to_watch">Plan to Watch</option>
+                      <option value="watching">Watching</option>
+                      <option value="completed">Completed</option>
+                      <option value="on_hold">On Hold</option>
+                      <option value="dropped">Dropped</option>
+                    </select>
+                    <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                      <input type="number" value={prog} onChange={e => {
+                        const nextProg = +e.target.value;
+                        setProg(nextProg);
+                        if (nextProg >= total) {
+                          setStatus("completed");
+                        } else if (status === "completed" && nextProg < total) {
+                          setStatus("watching");
+                        }
+                      }}
+                        style={{ width: 56, background: "#f5f3ff", border: "1.5px solid #a78bfa", borderRadius: 8, padding: "4px 8px", fontSize: 16, fontWeight: 800, color: "#1e1b4b", outline: "none", textAlign: "center" }} />
+                      <span style={{ fontSize: 12, color: "#9ca3af", fontWeight: 500 }}>/ {total}</span>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", gap: 6 }}>
+                    <button onClick={() => { onUpdate({ progress: prog, status }); setEditing(false); }}
+                      style={{ flex: 1, padding: "6px 12px", background: "linear-gradient(135deg,#9333ea,#7c3aed)", border: "none", borderRadius: 8, color: "#fff", fontSize: 12, fontWeight: 700, cursor: "pointer", boxShadow: "0 2px 6px rgba(124,58,237,0.2)" }}>Save</button>
+                    <button onClick={() => setEditing(false)}
+                      style={{ padding: "6px 12px", background: "#f3f0fb", border: "none", borderRadius: 8, color: "#6b7280", fontSize: 12, cursor: "pointer" }}>Cancel</button>
                   </div>
                 </div>
-                <div style={{ display: "flex", gap: 6 }}>
-                  <button onClick={() => { onUpdate({ progress: prog, status }); setEditing(false); }}
-                    style={{ flex: 1, padding: "6px 12px", background: "linear-gradient(135deg,#9333ea,#7c3aed)", border: "none", borderRadius: 8, color: "#fff", fontSize: 12, fontWeight: 700, cursor: "pointer", boxShadow: "0 2px 6px rgba(124,58,237,0.2)" }}>Save</button>
-                  <button onClick={() => setEditing(false)}
-                    style={{ padding: "6px 12px", background: "#f3f0fb", border: "none", borderRadius: 8, color: "#6b7280", fontSize: 12, cursor: "pointer" }}>Cancel</button>
+              ) : (
+                <div style={{ display: "flex", alignItems: "baseline", gap: 4, cursor: "pointer" }} onClick={startEditing}>
+                  <span style={{ fontSize: 26, fontWeight: 800, color: "#7c3aed", lineHeight: 1 }}>{entry.progress}</span>
+                  <span style={{ fontSize: 14, color: "#9ca3af", fontWeight: 500 }}>/ {total}</span>
                 </div>
-              </div>
-            ) : (
-              <div style={{ display: "flex", alignItems: "baseline", gap: 4, cursor: "pointer" }} onClick={startEditing}>
-                <span style={{ fontSize: 26, fontWeight: 800, color: "#7c3aed", lineHeight: 1 }}>{entry.progress}</span>
-                <span style={{ fontSize: 14, color: "#9ca3af", fontWeight: 500 }}>/ {total}</span>
-              </div>
-            )}
-            {!editing && (
-              <div style={{ flex: 1 }}>
-                <div style={{ background: "#ede9fe", borderRadius: 99, height: 6, overflow: "hidden", marginBottom: 3 }}>
-                  <div style={{ width: `${pct}%`, height: "100%", background: "linear-gradient(90deg,#7c3aed,#a855f7)", borderRadius: 99, transition: "width .4s" }} />
+              )}
+              {!editing && (
+                <div style={{ flex: 1 }}>
+                  <div style={{ background: "#ede9fe", borderRadius: 99, height: 6, overflow: "hidden", marginBottom: 3 }}>
+                    <div style={{ width: `${pct}%`, height: "100%", background: "linear-gradient(90deg,#7c3aed,#a855f7)", borderRadius: 99, transition: "width .4s" }} />
+                  </div>
+                  <div style={{ fontSize: 11, color: "#9ca3af", fontWeight: 600, textAlign: "right" }}>{pct}%</div>
                 </div>
-                <div style={{ fontSize: 11, color: "#9ca3af", fontWeight: 600, textAlign: "right" }}>{pct}%</div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Added date + View Details */}
-        <div style={{ display: "flex", alignItems: isMobile ? "flex-start" : "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
-          <div>
-            <div style={{ fontSize: 10, color: "#9ca3af", fontWeight: 600, marginBottom: 2 }}>Added on</div>
-            <div style={{ display: "flex", alignItems: "center", gap: 5, color: "#6b7280", fontSize: 12, fontWeight: 600 }}>
-              <ICalendar /> {addedDate}
+              )}
             </div>
           </div>
-          <button onClick={onNavigate} style={{
-            display: "inline-flex", alignItems: "center", gap: 5,
-            fontSize: 13, fontWeight: 700, color: "#7c3aed",
-            background: "none", border: "none", cursor: "pointer",
-          }}>
-            View Details <IChevRight />
-          </button>
+
+          {/* Added date + View Details */}
+          <div style={{ display: "flex", alignItems: isMobile ? "flex-start" : "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+            <div>
+              <div style={{ fontSize: 10, color: "#9ca3af", fontWeight: 600, marginBottom: 2 }}>Added on</div>
+              <div style={{ display: "flex", alignItems: "center", gap: 5, color: "#6b7280", fontSize: 12, fontWeight: 600 }}>
+                <ICalendar /> {addedDate}
+              </div>
+            </div>
+            <button onClick={onNavigate} style={{
+              display: "inline-flex", alignItems: "center", gap: 5,
+              fontSize: 13, fontWeight: 700, color: "#7c3aed",
+              background: "none", border: "none", cursor: "pointer",
+            }}>
+              View Details <IChevRight />
+            </button>
+          </div>
         </div>
-      </div>
       </>}
 
       {/* Three-dot menu */}
@@ -294,9 +294,9 @@ function AnimeListCard({ entry, onNavigate, onDelete, onUpdate, isMobile }) {
             boxShadow: "0 8px 32px rgba(124,58,237,0.14)", padding: 6, minWidth: 150,
           }}>
             {[
-              { label: "Edit Progress", Icon: IEdit,  action: () => { startEditing(); setMenuOpen(false); }, color: "#6b7280" },
-              { label: "View Details",  Icon: IChevRight, action: () => { onNavigate(); setMenuOpen(false); }, color: "#6b7280" },
-              { label: "Remove",        Icon: ITrash, action: () => { onDelete(); setMenuOpen(false); }, color: "#ef4444" },
+              { label: "Edit Progress", Icon: IEdit, action: () => { startEditing(); setMenuOpen(false); }, color: "#6b7280" },
+              { label: "View Details", Icon: IChevRight, action: () => { onNavigate(); setMenuOpen(false); }, color: "#6b7280" },
+              { label: "Remove", Icon: ITrash, action: () => { onDelete(); setMenuOpen(false); }, color: "#ef4444" },
             ].map(({ label, Icon, action, color }) => (
               <div key={label} onClick={action} style={{
                 display: "flex", alignItems: "center", gap: 8,
@@ -350,9 +350,9 @@ function EmptyListState({ onExplore }) {
 // ── Main Page ────────────────────────────────────────────────────────────────
 export default function MyList() {
   const isMobile = useIsMobile();
-  const [tab, setTab]       = useState("all");
+  const [tab, setTab] = useState("all");
   const [search, setSearch] = useState("");
-  const [sort, setSort]     = useState("last_added");
+  const [sort, setSort] = useState("last_added");
   const navigate = useNavigate();
   const qc = useQueryClient();
 
@@ -375,8 +375,8 @@ export default function MyList() {
   const filtered = list
     .filter(a => a.title.toLowerCase().includes(search.toLowerCase()))
     .sort((a, b) => {
-      if (sort === "title")    return a.title.localeCompare(b.title);
-      if (sort === "score")    return (b.user_score || 0) - (a.user_score || 0);
+      if (sort === "title") return a.title.localeCompare(b.title);
+      if (sort === "score") return (b.user_score || 0) - (a.user_score || 0);
       if (sort === "progress") return (b.progress || 0) - (a.progress || 0);
       return new Date(b.start_date || 0) - new Date(a.start_date || 0);
     });
@@ -411,11 +411,9 @@ export default function MyList() {
         <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
-              <div style={{ width: 3, height: 32, background: "linear-gradient(180deg,#9333ea,#7c3aed)", borderRadius: 99 }} />
               <h1 style={{ fontSize: 30, fontWeight: 800, color: "#1e1b4b", letterSpacing: "-0.3px" }}>
                 My Anime List
               </h1>
-              <ISparkle />
             </div>
             <p style={{ fontSize: 14, color: "#9ca3af", fontWeight: 500, marginLeft: 15 }}>
               Track every series, every episode, every memory.
