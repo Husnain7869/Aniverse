@@ -16,7 +16,7 @@ const CHIPS = [
 
 const INIT = [{
   role: "assistant",
-  text: "Hey! 👋 I'm AniMind — your AI anime companion.\n\nI have full access to your watch history, ratings, and taste profile. Every recommendation I make is personalized to you.\n\nWhat are you in the mood for?",
+  text: "Hey! 👋 I'm AniVerse — your AI anime companion.\n\nI have full access to your watch history, ratings, and taste profile. Every recommendation I make is personalized to you.\n\nWhat are you in the mood for?",
 }];
 
 export default function AIRecommend() {
@@ -51,7 +51,7 @@ export default function AIRecommend() {
     } catch (err) {
       setMessages(prev => [...prev, {
         role: "assistant",
-        text: "⚠️ Couldn't connect to the backend. Make sure the API server is running on port 8000.",
+        text: "⚠️ Couldn't connect to the backend. Make sure the API server is running.",
       }]);
     }
     setLoading(false);
@@ -68,7 +68,7 @@ export default function AIRecommend() {
         <div style={{ padding: "18px 24px", borderBottom: "1px solid var(--border)", background: "linear-gradient(135deg,var(--purple-50),var(--surface))", display: "flex", alignItems: "center", gap: 12 }}>
           <div style={{ width: 44, height: 44, borderRadius: 14, background: "linear-gradient(135deg,var(--purple-600),var(--purple-700))", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, boxShadow: "0 4px 12px rgba(124,58,237,0.3)" }}>✦</div>
           <div>
-            <div style={{ fontSize: 16, fontWeight: 800, color: "var(--text-primary)" }}>AniMind AI</div>
+            <div style={{ fontSize: 16, fontWeight: 800, color: "var(--text-primary)" }}>AniVerse AI</div>
             <div style={{ fontSize: 12, color: "var(--text-muted)" }}>Personalized to your watch history</div>
           </div>
           <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 8 }}>

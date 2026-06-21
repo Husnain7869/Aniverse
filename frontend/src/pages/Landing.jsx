@@ -204,7 +204,7 @@ export default function Landing() {
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, cursor: "default" }}>
           <IcLeaf />
-          <span style={{ fontSize: 20, fontWeight: 900, color: "#1e1b4b", letterSpacing: "-0.5px" }}>AniMind</span>
+          <span style={{ fontSize: 20, fontWeight: 900, color: "#1e1b4b", letterSpacing: "-0.5px" }}>AniVerse</span>
         </div>
 
         {/* Anchor links — hidden on mobile */}
@@ -445,9 +445,9 @@ export default function Landing() {
       <footer style={{ background: "#fff", borderTop: "1px solid rgba(139,92,246,0.1)", padding: "22px 48px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <IcLeaf />
-          <span style={{ fontSize: 17, fontWeight: 900, color: "#1e1b4b" }}>AniMind</span>
+          <span style={{ fontSize: 17, fontWeight: 900, color: "#1e1b4b" }}>AniVerse</span>
         </div>
-        <span style={{ fontSize: 12.5, color: "#9ca3af" }}>© 2026 AniMind. All rights reserved.</span>
+        <span style={{ fontSize: 12.5, color: "#9ca3af" }}>© 2026 AniVerse. All rights reserved.</span>
         <div style={{ display: "flex", gap: 24 }}>
           {["Privacy", "Terms", "About", "Contact"].map(l => (
             <a key={l} href="#" style={{ fontSize: 13, fontWeight: 600, color: "#6b7280", textDecoration: "none" }}

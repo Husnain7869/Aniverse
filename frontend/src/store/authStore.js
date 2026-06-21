@@ -35,7 +35,7 @@ const useAuthStore = create(
 
       updateUser: (userData) => set({ user: { ...get().user, ...userData } }),
     }),
-    { name: "AniMind-auth", partialize: (s) => ({ user: s.user, token: s.token, isAuthenticated: s.isAuthenticated }) }
+    { name: "AniVerse-auth", partialize: (s) => ({ user: s.user, token: s.token, isAuthenticated: s.isAuthenticated }) }
   )
 );
 

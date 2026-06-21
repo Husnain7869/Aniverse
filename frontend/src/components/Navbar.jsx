@@ -99,7 +99,7 @@ export default function Navbar() {
           <div style={{ width: 34, height: 34, borderRadius: 9, background: "linear-gradient(135deg,#c084fc,#7c3aed)", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <ShioriLogo />
           </div>
-          <span style={{ fontSize: 19, fontWeight: 800, color: "#1e1b4b", fontFamily: "'Playfair Display',serif", letterSpacing: "-0.3px" }}>AniMind</span>
+          <span style={{ fontSize: 19, fontWeight: 800, color: "#1e1b4b", fontFamily: "'Playfair Display',serif", letterSpacing: "-0.3px" }}>AniVerse</span>
         </div>
 
         {/* Desktop nav links */}
@@ -197,7 +197,7 @@ export default function Navbar() {
                 <div style={{ width: 30, height: 30, borderRadius: 8, background: "linear-gradient(135deg,#c084fc,#7c3aed)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <ShioriLogo />
                 </div>
-                <span style={{ fontSize: 17, fontWeight: 800, color: "#1e1b4b" }}>AniMind</span>
+                <span style={{ fontSize: 17, fontWeight: 800, color: "#1e1b4b" }}>AniVerse</span>
               </div>
               <div onClick={closeDrawer} style={{ cursor: "pointer", color: "#6b7280", padding: 4 }}><IconX /></div>
             </div>

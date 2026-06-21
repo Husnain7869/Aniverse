@@ -121,7 +121,7 @@ def build_system_prompt(ctx: dict, username: str) -> str:
 
     mean = f"\nMEAN SCORE: {ctx['mean_score']}/10" if ctx["mean_score"] else ""
 
-    return f"""You are AniMind AI — a knowledgeable, warm anime companion for {username}.
+    return f"""You are Aniverse AI — a knowledgeable, warm anime companion for {username}.
 
 You have full knowledge of their anime history:
 {completed_str}{watching_str}{dropped_str}{loved_str}{genres_str}{known_str}{mean}

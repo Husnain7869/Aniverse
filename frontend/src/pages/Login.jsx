@@ -160,7 +160,7 @@ export default function Login() {
 
       <div style={{ position: "absolute", top: 24, left: 32, display: "flex", alignItems: "center", gap: 8, zIndex: 10 }}>
         <IcLogoLeaf />
-        <span style={{ fontSize: 19, fontWeight: 900, color: "#1e1b4b", letterSpacing: "-0.5px" }}>AniMind</span>
+        <span style={{ fontSize: 19, fontWeight: 900, color: "#1e1b4b", letterSpacing: "-0.5px" }}>AniVerse</span>
       </div>
 
       <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "80px 20px 60px", position: "relative", zIndex: 5 }}>
@@ -256,7 +256,7 @@ export default function Login() {
       </div>
 
       <div style={{ position: "relative", zIndex: 5, textAlign: "center", padding: "0 20px 24px", display: "flex", alignItems: "center", justifyContent: "center", flexWrap: "wrap" }}>
-        <span style={{ fontSize: 12.5, color: "#9ca3af" }}>© 2026 AniMind. All rights reserved.</span>
+        <span style={{ fontSize: 12.5, color: "#9ca3af" }}>© 2026 AniVerse. All rights reserved.</span>
         <span style={{ color: "#d1d5db", margin: "0 16px" }}>|</span>
         <a href="#" style={{ fontSize: 12.5, color: "#9ca3af", textDecoration: "none", fontWeight: 600 }}
           onMouseEnter={e => e.target.style.color = "#7c3aed"} onMouseLeave={e => e.target.style.color = "#9ca3af"}>Privacy Policy</a>

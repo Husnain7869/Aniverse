@@ -1,14 +1,14 @@
-# 🌸 AniVerse
+# 🌌 Aniverse
 
-**AniVerse** is a full-stack anime tracking platform that helps users discover, organize, and track anime in one place.
+**Aniverse** is a full-stack anime tracking platform that helps users discover, organize, and track anime in one place.
 
-Built with React, FastAPI, PostgreSQL, AniList GraphQL, and OpenAI, AniVerse delivers personalized recommendations, detailed analytics, and a modern user experience for anime enthusiasts.
+Built with React, FastAPI, PostgreSQL, AniList GraphQL, and OpenAI, Aniverse delivers personalized recommendations, detailed analytics, and a modern user experience for anime enthusiasts.
 
 ---
 
 ## Overview
 
-AniVerse allows users to:
+Aniverse allows users to:
 
 * Search anime using the AniList GraphQL API
 * Build and manage personal watchlists

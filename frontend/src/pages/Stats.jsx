@@ -114,7 +114,14 @@ export default function Stats() {
   if (error) return (
     <div style={{ textAlign: "center", padding: "60px 0" }}>
       <div style={{ fontSize: 48, marginBottom: 12 }}>⚠️</div>
-      <div style={{ fontSize: 16, color: "var(--text-muted)" }}>Could not load stats. Make sure the backend is running.</div>
+      <div style={{ fontSize: 16, color: "var(--text-muted)", marginBottom: 8 }}>
+        {error?.response?.status === 401
+          ? "Session expired. Please log in again."
+          : "Could not load stats. Make sure the backend is running."}
+      </div>
+      {error?.response?.status === 401 && (
+        <a href="/login" style={{ color: "var(--purple-500)", fontWeight: 700, fontSize: 14 }}>Go to Login →</a>
+      )}
     </div>
   );
 
